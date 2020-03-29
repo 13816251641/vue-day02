@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div id="app">
+        <p>{{msg | msgFormat("疯狂")}}</p>
+    </div>
+</body>
+<script src="lib/vue-2.4.0.js"></script>
+<script>
+    //定义一个Vue全局的过滤器,名字叫做 msgFormat,要在new Vue的前面申明!!!
+    Vue.filter("msgFormat",function(data,arg){
+        return data.replace(/单纯/g,arg);//定义一个正则
+    });
+    var vm = new Vue({
+        el:"#app",
+        data:{
+            msg:'曾经我也是个单纯的人,世界上最单纯的人'
+        },
+        /*
+            定义私有过滤器,采用的是就近原则,如果私有过滤器和全局过滤器名称一致,这时优先调用私有过滤器
+         */
+        filters:{
+            msgFormat(data,arg) {
+                console.log(data);//需要过滤的数据
+                return data.replace(/单纯/g,arg+"内部");//定义一个正则
+            }
+        }
+    });
+
+</script>
+</html>
